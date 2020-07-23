@@ -138,10 +138,10 @@ fn render(
         .ok_or_else(|| RenderError::new("No path found for chapter in JSON data"))
         .and_then(|p| {
             Path::new(p)
-                .with_extension("html")
+                // .with_extension("html") Bob: Prevent changing `.md` extension to `.html`.
                 .to_str()
                 .ok_or_else(|| RenderError::new("Link could not be converted to str"))
-                .map(|p| context.insert("link".to_owned(), json!(p.replace("\\", "/"))))
+                .map(|p| context.insert("link".to_owned(), json!(p[..p.len()-9].replace("\\", "/")))) // Bob: Trim the `/index.md` suffix from link.
         })?;
 
     trace!("Render template");

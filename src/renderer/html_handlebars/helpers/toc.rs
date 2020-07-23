@@ -113,7 +113,7 @@ impl HelperDef for RenderToc {
                     out.write("<a href=\"")?;
 
                     let tmp = Path::new(item.get("path").expect("Error: path should be Some(_)"))
-                        .with_extension("html")
+                        // .with_extension("html") Bob: Prevent changing `.md` extension to `.html`.
                         .to_str()
                         .unwrap()
                         // Hack for windows who tends to use `\` as separator instead of `/`
@@ -121,7 +121,7 @@ impl HelperDef for RenderToc {
 
                     // Add link
                     out.write(&utils::fs::path_to_root(&current_path))?;
-                    out.write(&tmp)?;
+                    out.write(&tmp[..tmp.len()-9])?; // Bob: Trim the `/index.md` suffix from link.
                     out.write("\"")?;
 
                     if path == &current_path {
