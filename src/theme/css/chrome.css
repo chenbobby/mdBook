@@ -95,7 +95,6 @@ a > .hljs {
     font-weight: 200;
     font-size: 2rem;
     line-height: var(--menu-bar-height);
-    text-align: center;
     margin: 0;
     flex: 1;
     white-space: nowrap;
